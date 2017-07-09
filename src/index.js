@@ -1,10 +1,22 @@
 import React, {Component} from 'react'
 import ReactDOM from 'react-dom'
 import Entidad from './entidad';
+import {reforms, Input} from 'reforms';
 
 class Edit extends Component {
+    constructor(args) {
+        super(args);
+        this.form = new reforms;
+    }
     render() {
-        return <h1>Editar</h1>
+        return <this.render.form>
+            <h1>Editar</h1>
+            <div className="form-group">
+                <label>E-mail</label>
+                <Input type="email" className="form-control" name="email" placeholder="E-mail address" />
+            </div>
+        </this.render.form>
+
     }
 }
 
