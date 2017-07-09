@@ -62,6 +62,8 @@
 
 	var _reforms = __webpack_require__(187);
 
+	var _reforms2 = _interopRequireDefault(_reforms);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69,6 +71,8 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var ignore = ['id', 'borrado'];
 
 	var Edit = function (_Component) {
 	    _inherits(Edit, _Component);
@@ -78,30 +82,51 @@
 
 	        var _this = _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).call(this, args));
 
-	        _this.form = new _reforms.reforms();
+	        _this.form = new _reforms2.default();
 	        return _this;
 	    }
 
 	    _createClass(Edit, [{
 	        key: 'render',
 	        value: function render() {
+	            var _this2 = this;
+
 	            return _react2.default.createElement(
-	                this.render.form,
+	                this.form,
 	                null,
 	                _react2.default.createElement(
 	                    'h1',
 	                    null,
 	                    'Editar'
 	                ),
+	                Object.keys(this.props.data).map(function (m) {
+	                    if (ignore.indexOf(m) !== -1) return;
+	                    return _react2.default.createElement(
+	                        'div',
+	                        { className: 'form-group', key: m },
+	                        _react2.default.createElement(
+	                            'label',
+	                            null,
+	                            m
+	                        ),
+	                        _react2.default.createElement(_reforms.Input, { type: 'text', className: 'form-control', name: m, value: _this2.props.data[m] })
+	                    );
+	                }),
 	                _react2.default.createElement(
 	                    'div',
-	                    { className: 'form-group' },
+	                    null,
 	                    _react2.default.createElement(
-	                        'label',
-	                        null,
-	                        'E-mail'
+	                        'button',
+	                        { className: 'btn btn-success' },
+	                        'Guardar'
 	                    ),
-	                    _react2.default.createElement(_reforms.Input, { type: 'email', className: 'form-control', name: 'email', placeholder: 'E-mail address' })
+	                    _react2.default.createElement(
+	                        'button',
+	                        { className: 'btn', onClick: function onClick(r) {
+	                                return _this2.props.comeback_to.setState({ edit: null });
+	                            } },
+	                        'Cancelar'
+	                    )
 	                )
 	            );
 	        }
@@ -116,10 +141,10 @@
 	    function Table(args) {
 	        _classCallCheck(this, Table);
 
-	        var _this2 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, args));
+	        var _this3 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, args));
 
-	        _this2.state = { header: [], row: [], loading: true, edit: null };
-	        return _this2;
+	        _this3.state = { header: [], row: [], loading: true, edit: null };
+	        return _this3;
 	    }
 
 	    _createClass(Table, [{
@@ -130,7 +155,7 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var _this3 = this;
+	            var _this4 = this;
 
 	            if (this.state.loading) {
 	                return _react2.default.createElement(
@@ -167,11 +192,11 @@
 	                    this.state.row.map(function (row) {
 	                        return _react2.default.createElement(
 	                            'tr',
-	                            { key: row.id },
-	                            _this3.state.fields.map(function (m) {
+	                            { key: 'row:' + row.id },
+	                            _this4.state.fields.map(function (m) {
 	                                return _react2.default.createElement(
 	                                    'td',
-	                                    null,
+	                                    { key: row.id + ":" + m },
 	                                    row[m]
 	                                );
 	                            }),
@@ -181,7 +206,7 @@
 	                                _react2.default.createElement(
 	                                    'button',
 	                                    { className: 'btn-xs btn btn-success', onClick: function onClick(r) {
-	                                            _this3.setState({ edit: row });
+	                                            return _this4.setState({ edit: row });
 	                                        } },
 	                                    'Editar'
 	                                )
@@ -22345,7 +22370,7 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _datasource2 = __webpack_require__(202);
+	var _datasource2 = __webpack_require__(185);
 
 	var _datasource3 = _interopRequireDefault(_datasource2);
 
@@ -22380,7 +22405,66 @@
 	exports.default = Entidad;
 
 /***/ }),
-/* 185 */,
+/* 185 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _settings = __webpack_require__(186);
+
+	var _settings2 = _interopRequireDefault(_settings);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CRUD = function () {
+	    function CRUD() {
+	        _classCallCheck(this, CRUD);
+	    }
+
+	    _createClass(CRUD, [{
+	        key: 'renderer',
+	        value: function renderer(render) {
+	            var _this = this;
+
+	            this.render = render;
+	            var header = [];
+	            Object.keys(this.fields).map(function (m) {
+	                header.push(_this.fields[m]);
+	            });
+	            render.setState({ header: header, fields: Object.keys(this.fields) });
+	            this.get_all();
+	        }
+	    }, {
+	        key: 'get_all',
+	        value: function get_all() {
+	            var _this2 = this;
+
+	            this.render.setState({ loading: true });
+	            $.get(_settings2.default.API + this.action + '/').then(function (r) {
+	                return _this2.render.setState({ loading: false, row: r.results });
+	            }).catch(function (r) {
+	                if (r.status === 403) {
+	                    // el django tiene que soportar enviarnos de vuelta a la app.
+	                    document.location.href = _settings2.default.API + "api-auth/login/?next=" + encodeURI(document.location.href);
+	                }
+	            });
+	        }
+	    }]);
+
+	    return CRUD;
+	}();
+
+	exports.default = CRUD;
+
+/***/ }),
 /* 186 */
 /***/ (function(module, exports) {
 
@@ -22389,6 +22473,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	$.ajaxSetup({
 	    data: {},
 	    dataType: 'json',
@@ -22398,9 +22485,9 @@
 	    crossDomain: true
 	});
 
-	exports.default = {
+	exports.default = _defineProperty({
 	    API: 'http://127.0.0.1:9090/'
-	};
+	}, 'API', 'http://192.168.1.108:9090/');
 
 /***/ }),
 /* 187 */
@@ -23589,66 +23676,6 @@
 	        throw new Error();
 	    }
 	});
-
-/***/ }),
-/* 202 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _settings = __webpack_require__(186);
-
-	var _settings2 = _interopRequireDefault(_settings);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var CRUD = function () {
-	    function CRUD() {
-	        _classCallCheck(this, CRUD);
-	    }
-
-	    _createClass(CRUD, [{
-	        key: 'renderer',
-	        value: function renderer(render) {
-	            var _this = this;
-
-	            this.render = render;
-	            var header = [];
-	            Object.keys(this.fields).map(function (m) {
-	                header.push(_this.fields[m]);
-	            });
-	            render.setState({ header: header, fields: Object.keys(this.fields) });
-	            this.get_all();
-	        }
-	    }, {
-	        key: 'get_all',
-	        value: function get_all() {
-	            var _this2 = this;
-
-	            this.render.setState({ loading: true });
-	            $.get(_settings2.default.API + this.action + '/').then(function (r) {
-	                return _this2.render.setState({ loading: false, row: r.results });
-	            }).catch(function (r) {
-	                if (r.status === 403) {
-	                    // el django tiene que soportar enviarnos de vuelta a la app.
-	                    document.location.href = _settings2.default.API + "api-auth/login/?next=" + encodeURI(document.location.href);
-	                }
-	            });
-	        }
-	    }]);
-
-	    return CRUD;
-	}();
-
-	exports.default = CRUD;
 
 /***/ })
 /******/ ]);
