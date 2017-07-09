@@ -22428,7 +22428,7 @@
 	            }).catch(function (r) {
 	                if (r.status === 403) {
 	                    // el django tiene que soportar enviarnos de vuelta a la app.
-	                    document.location.href = API + "api-auth/login/?next=" + encodeURI(document.location.href);
+	                    document.location.href = _settings2.default.API + "api-auth/login/?next=" + encodeURI(document.location.href);
 	                }
 	            });
 	        }
