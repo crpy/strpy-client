@@ -1,13 +1,14 @@
 import React from 'react';
 import CRUD from './crud';
 
-class Entidad extends CRUD {
+export default class Entidad extends CRUD {
     constructor() {
         super();
         this.action = 'entidad';
         this.fields = {
+            sigla: 'ID',
+            nombre: 'Nombre',
             abrev: 'Titulo',
-            xxx: 'Lol',
         }
     }
 }

@@ -68,42 +68,116 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Table = function (_Component) {
-	    _inherits(Table, _Component);
+	var Edit = function (_Component) {
+	    _inherits(Edit, _Component);
 
-	    function Table() {
+	    function Edit() {
+	        _classCallCheck(this, Edit);
+
+	        return _possibleConstructorReturn(this, (Edit.__proto__ || Object.getPrototypeOf(Edit)).apply(this, arguments));
+	    }
+
+	    _createClass(Edit, [{
+	        key: 'render',
+	        value: function render() {
+	            return _react2.default.createElement(
+	                'h1',
+	                null,
+	                'Editar'
+	            );
+	        }
+	    }]);
+
+	    return Edit;
+	}(_react.Component);
+
+	var Table = function (_Component2) {
+	    _inherits(Table, _Component2);
+
+	    function Table(args) {
 	        _classCallCheck(this, Table);
 
-	        return _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).apply(this, arguments));
+	        var _this2 = _possibleConstructorReturn(this, (Table.__proto__ || Object.getPrototypeOf(Table)).call(this, args));
+
+	        _this2.state = { header: [], row: [], loading: true, edit: null };
+	        return _this2;
 	    }
 
 	    _createClass(Table, [{
-	        key: 'get_header',
-	        value: function get_header() {
-	            var _this2 = this;
-
-	            return Object.keys(this.crud.fields).map(function (m) {
-	                return { 'name': _this2.crud.fields[m] };
-	            });
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            this.props.datasource.renderer(this);
 	        }
-	    }, {
-	        key: 'get_rows',
-	        value: function get_rows() {}
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            var html = Mustache.render($('#table-tpl').html(), {
-	                header: this.get_header()
-	            });
+	            var _this3 = this;
 
-	            $('.container').empty().html(html);
+	            if (this.state.loading) {
+	                return _react2.default.createElement(
+	                    'div',
+	                    { className: 'alert alert-success' },
+	                    'Cargando...'
+	                );
+	            }
+	            if (this.state.edit) {
+	                return _react2.default.createElement(Edit, { data: this.state.edit, comeback_to: this });
+	            }
+	            return _react2.default.createElement(
+	                'table',
+	                { className: 'table table-striped' },
+	                _react2.default.createElement(
+	                    'thead',
+	                    null,
+	                    _react2.default.createElement(
+	                        'tr',
+	                        null,
+	                        this.state.header.map(function (name) {
+	                            return _react2.default.createElement(
+	                                'th',
+	                                { key: name },
+	                                name
+	                            );
+	                        }),
+	                        _react2.default.createElement('th', null)
+	                    )
+	                ),
+	                _react2.default.createElement(
+	                    'tbody',
+	                    null,
+	                    this.state.row.map(function (row) {
+	                        return _react2.default.createElement(
+	                            'tr',
+	                            { key: row.id },
+	                            _this3.state.fields.map(function (m) {
+	                                return _react2.default.createElement(
+	                                    'td',
+	                                    null,
+	                                    row[m]
+	                                );
+	                            }),
+	                            _react2.default.createElement(
+	                                'td',
+	                                null,
+	                                _react2.default.createElement(
+	                                    'button',
+	                                    { className: 'btn-xs btn btn-success', onClick: function onClick(r) {
+	                                            _this3.setState({ edit: row });
+	                                        } },
+	                                    'Editar'
+	                                )
+	                            )
+	                        );
+	                    })
+	                )
+	            );
 	        }
 	    }]);
 
 	    return Table;
 	}(_react.Component);
 
-	_reactDom2.default.mount(_react2.default.createElement(Table, { datasource: new _entidad2.default() }), documetn.getElementById('main'));
+	_reactDom2.default.render(_react2.default.createElement(Table, { datasource: new _entidad2.default() }), document.getElementById('container'));
 
 /***/ }),
 /* 1 */
@@ -22244,6 +22318,10 @@
 
 	'use strict';
 
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
 	var _react = __webpack_require__(1);
 
 	var _react2 = _interopRequireDefault(_react);
@@ -22270,8 +22348,9 @@
 
 	        _this.action = 'entidad';
 	        _this.fields = {
-	            abrev: 'Titulo',
-	            xxx: 'Lol'
+	            sigla: 'ID',
+	            nombre: 'Nombre',
+	            abrev: 'Titulo'
 	        };
 	        return _this;
 	    }
@@ -22279,11 +22358,13 @@
 	    return Entidad;
 	}(_crud2.default);
 
+	exports.default = Entidad;
+
 /***/ }),
 /* 185 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -22305,11 +22386,26 @@
 	    }
 
 	    _createClass(CRUD, [{
-	        key: "get_all",
+	        key: 'renderer',
+	        value: function renderer(render) {
+	            var _this = this;
+
+	            this.render = render;
+	            var header = [];
+	            Object.keys(this.fields).map(function (m) {
+	                header.push(_this.fields[m]);
+	            });
+	            render.setState({ header: header, fields: Object.keys(this.fields) });
+	            this.get_all();
+	        }
+	    }, {
+	        key: 'get_all',
 	        value: function get_all() {
-	            console.error(_settings2.default);
-	            $.get(_settings2.default.API + this.action).then(function (r) {
-	                return console.error(r.results);
+	            var _this2 = this;
+
+	            this.render.setState({ loading: true });
+	            $.get(_settings2.default.API + this.action + '/').then(function (r) {
+	                return _this2.render.setState({ loading: false, row: r.results });
 	            }).catch(function (r) {
 	                if (r.status === 403) {
 	                    // el django tiene que soportar enviarnos de vuelta a la app.

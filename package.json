@@ -27,6 +27,7 @@
     "webpack-preset-babel-stage-2": "^0.2.0"
   },
   "dependencies": {
-    "react-addons-test-utils": "^15.6.0"
+    "react-addons-test-utils": "^15.6.0",
+    "reforms": "^0.8.1"
   }
 }

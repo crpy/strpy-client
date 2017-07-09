@@ -5,7 +5,7 @@ var config = {
      entry: './src/index',
      output: {
          path: __dirname,
-         filename: 'app.js',
+         filename: 'public/app.js',
      },
      externals: {
          //"react": "React",
