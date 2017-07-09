@@ -20,6 +20,18 @@ React es utilizado en facebook, es un proyecto activo, lo cual nos aseguramos de
 
 Tambien `webpack` nos permite empaquetar nuestra app (que tiene muchos archivos) en uno solo. Tambien nos permite utilizar el nuevo Javascript (ES2016) para tener un codigo mas simple y conciso.
 
+### Porque un servidor de API?
+
+Al centralizar toda la logica del servidor en un solo lugar, con un solo lenguaje, simplifica bastante:
+
+ 1. Seguridad, todos los datos se acceden por medio de un solo servicio, lenguage y framework.
+ 2. Los clientes pueden estar hosteados en cualquier servidor, una telefono movil o una app de escritorio (con Electron)
+ 3. El servidor habla un solo lenguaje (JSON) uniforme para todos los clientes
+ 4. La sesion es manejada por el server.
+ 5. El rendering de los datos es responsabilidad exclusiva de cada cliente (este es el cliente "web").
+ 
+En el stack actual el hay un servicio para usuario (CAS) (que esta mal configurado) permite a cualquier app loguear. STP es el encargado de manejar datos y tambien de "renderear".
+
 
 ## Development
 
