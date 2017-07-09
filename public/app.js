@@ -22345,9 +22345,9 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
-	var _crud = __webpack_require__(185);
+	var _datasource2 = __webpack_require__(202);
 
-	var _crud2 = _interopRequireDefault(_crud);
+	var _datasource3 = _interopRequireDefault(_datasource2);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22357,8 +22357,8 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var Entidad = function (_CRUD) {
-	    _inherits(Entidad, _CRUD);
+	var Entidad = function (_datasource) {
+	    _inherits(Entidad, _datasource);
 
 	    function Entidad() {
 	        _classCallCheck(this, Entidad);
@@ -22375,71 +22375,12 @@
 	    }
 
 	    return Entidad;
-	}(_crud2.default);
+	}(_datasource3.default);
 
 	exports.default = Entidad;
 
 /***/ }),
-/* 185 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _settings = __webpack_require__(186);
-
-	var _settings2 = _interopRequireDefault(_settings);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	var CRUD = function () {
-	    function CRUD() {
-	        _classCallCheck(this, CRUD);
-	    }
-
-	    _createClass(CRUD, [{
-	        key: 'renderer',
-	        value: function renderer(render) {
-	            var _this = this;
-
-	            this.render = render;
-	            var header = [];
-	            Object.keys(this.fields).map(function (m) {
-	                header.push(_this.fields[m]);
-	            });
-	            render.setState({ header: header, fields: Object.keys(this.fields) });
-	            this.get_all();
-	        }
-	    }, {
-	        key: 'get_all',
-	        value: function get_all() {
-	            var _this2 = this;
-
-	            this.render.setState({ loading: true });
-	            $.get(_settings2.default.API + this.action + '/').then(function (r) {
-	                return _this2.render.setState({ loading: false, row: r.results });
-	            }).catch(function (r) {
-	                if (r.status === 403) {
-	                    // el django tiene que soportar enviarnos de vuelta a la app.
-	                    document.location.href = _settings2.default.API + "api-auth/login/?next=" + encodeURI(document.location.href);
-	                }
-	            });
-	        }
-	    }]);
-
-	    return CRUD;
-	}();
-
-	exports.default = CRUD;
-
-/***/ }),
+/* 185 */,
 /* 186 */
 /***/ (function(module, exports) {
 
@@ -23648,6 +23589,66 @@
 	        throw new Error();
 	    }
 	});
+
+/***/ }),
+/* 202 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _settings = __webpack_require__(186);
+
+	var _settings2 = _interopRequireDefault(_settings);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CRUD = function () {
+	    function CRUD() {
+	        _classCallCheck(this, CRUD);
+	    }
+
+	    _createClass(CRUD, [{
+	        key: 'renderer',
+	        value: function renderer(render) {
+	            var _this = this;
+
+	            this.render = render;
+	            var header = [];
+	            Object.keys(this.fields).map(function (m) {
+	                header.push(_this.fields[m]);
+	            });
+	            render.setState({ header: header, fields: Object.keys(this.fields) });
+	            this.get_all();
+	        }
+	    }, {
+	        key: 'get_all',
+	        value: function get_all() {
+	            var _this2 = this;
+
+	            this.render.setState({ loading: true });
+	            $.get(_settings2.default.API + this.action + '/').then(function (r) {
+	                return _this2.render.setState({ loading: false, row: r.results });
+	            }).catch(function (r) {
+	                if (r.status === 403) {
+	                    // el django tiene que soportar enviarnos de vuelta a la app.
+	                    document.location.href = _settings2.default.API + "api-auth/login/?next=" + encodeURI(document.location.href);
+	                }
+	            });
+	        }
+	    }]);
+
+	    return CRUD;
+	}();
+
+	exports.default = CRUD;
 
 /***/ })
 /******/ ]);

@@ -1,7 +1,7 @@
 import React from 'react';
-import CRUD from './crud';
+import datasource from './datasource';
 
-export default class Entidad extends CRUD {
+export default class Entidad extends datasource {
     constructor() {
         super();
         this.action = 'entidad';
