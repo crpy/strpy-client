@@ -2,7 +2,24 @@
 
 ## Instalacion
 
-Copiar public/ a un servidor HTTP publico
+Copiar `public/` a un servidor HTTP publico
+
+## Motivacion
+
+Analizamos como esta desarrollado STP actualmente y decidimos que era mas factible empezar de cero, con la misma base de datos.
+
+### Porque python?
+
+Python es un lenguaje popular. Al ser popular es mas facil y barato conseguir mano de obra calificada. Tambien existe miles de librerias y frameworks que agilizan el desarrollo, lo hacen mantenible y evita problemas como los que encontramos en el sistema Actual (SQL injections)
+
+### Porque React?
+
+Es un framework que facilita bastante la logica de aplicaciones complejas de pagina unica (como GMAIL). Al tener estados y poder llamar al render las veces que exista algun cambio hace que la logica sea mas sencilla (jQuery es opcional, en este prototipo solo lo utilizamos para Ajax, pero es la version final no seria incluida).
+
+React es utilizado en facebook, es un proyecto activo, lo cual nos aseguramos de que tenga soporte por muchos anhos.
+
+Tambien `webpack` nos permite empaquetar nuestra app (que tiene muchos archivos) en uno solo. Tambien nos permite utilizar el nuevo Javascript (ES2016) para tener un codigo mas simple y conciso.
+
 
 ## Development
 
