@@ -10,9 +10,18 @@ export default class CRUD {
         render.setState({header, fields: Object.keys(this.fields)});
         this.get_all();
     }
+
+    get_url() {
+        return Settings.API + this.action + '/';
+    }
+
+    save(id, data) {
+        $.post(this.get_url(), data)
+    }
+
     get_all() {
         this.render.setState({ loading: true });
-        $.get(Settings.API + this.action + '/')
+        $.get(this.get_url())
             .then(r => this.render.setState({loading: false, row:r.results}))
             .catch(r => {
                 if (r.status === 403) {

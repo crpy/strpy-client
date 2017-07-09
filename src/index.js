@@ -20,7 +20,9 @@ class Edit extends Component {
             </div>
             })}
             <div>
-                <button className="btn btn-success">Guardar</button>
+                <button className="btn btn-success" onClick={ r=> {
+                    this.props.datasource.save(this.props.data.id, this.form.getValues())
+                }}>Guardar</button>
                 <button className="btn" onClick={r => this.props.comeback_to.setState({edit: null}) }>Cancelar</button>
             </div>
         </this.form>
@@ -41,7 +43,7 @@ class Table extends Component {
             return <div className="alert alert-success">Cargando...</div>
         }
         if (this.state.edit) {
-            return <Edit data={this.state.edit} comeback_to={this} />
+            return <Edit data={this.state.edit} comeback_to={this} datasource={this.props.datasource} />
         }
         return <table className="table table-striped">
             <thead>

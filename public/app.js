@@ -117,7 +117,9 @@
 	                    null,
 	                    _react2.default.createElement(
 	                        'button',
-	                        { className: 'btn btn-success' },
+	                        { className: 'btn btn-success', onClick: function onClick(r) {
+	                                _this2.props.datasource.save(_this2.props.data.id, _this2.form.getValues());
+	                            } },
 	                        'Guardar'
 	                    ),
 	                    _react2.default.createElement(
@@ -165,7 +167,7 @@
 	                );
 	            }
 	            if (this.state.edit) {
-	                return _react2.default.createElement(Edit, { data: this.state.edit, comeback_to: this });
+	                return _react2.default.createElement(Edit, { data: this.state.edit, comeback_to: this, datasource: this.props.datasource });
 	            }
 	            return _react2.default.createElement(
 	                'table',
@@ -22443,12 +22445,22 @@
 	            this.get_all();
 	        }
 	    }, {
+	        key: 'get_url',
+	        value: function get_url() {
+	            return _settings2.default.API + this.action + '/';
+	        }
+	    }, {
+	        key: 'save',
+	        value: function save(id, data) {
+	            $.post(this.get_url(), data);
+	        }
+	    }, {
 	        key: 'get_all',
 	        value: function get_all() {
 	            var _this2 = this;
 
 	            this.render.setState({ loading: true });
-	            $.get(_settings2.default.API + this.action + '/').then(function (r) {
+	            $.get(this.get_url()).then(function (r) {
 	                return _this2.render.setState({ loading: false, row: r.results });
 	            }).catch(function (r) {
 	                if (r.status === 403) {
